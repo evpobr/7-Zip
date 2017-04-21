@@ -1,0 +1,499 @@
+cmake_minimum_required(VERSION 3.1)
+
+project(7-Zip)
+
+SET(7z_COMMON_SOURCES
+  CPP/Common/CRC.cpp
+  CPP/Common/CrcReg.cpp
+  CPP/Common/DynLimBuf.cpp
+  CPP/Common/DynLimBuf.h
+  CPP/Common/IntToString.cpp
+  CPP/Common/IntToString.h
+  CPP/Common/MyMap.cpp
+  CPP/Common/MyMap.h
+  CPP/Common/MyString.cpp
+  CPP/Common/MyString.h
+  CPP/Common/MyVector.cpp
+  CPP/Common/MyVector.h
+  CPP/Common/MyXml.cpp
+  CPP/Common/MyXml.h
+  CPP/Common/NewHandler.cpp
+  CPP/Common/NewHandler.h
+  CPP/Common/Sha1Reg.cpp
+  CPP/Common/Sha256Reg.cpp
+  CPP/Common/StringConvert.cpp
+  CPP/Common/StringConvert.h
+  CPP/Common/StringToInt.cpp
+  CPP/Common/StringToInt.h
+  CPP/Common/UTFConvert.cpp
+  CPP/Common/UTFConvert.h
+  CPP/Common/Wildcard.cpp
+  CPP/Common/Wildcard.h
+  CPP/Common/XzCrc64Reg.cpp)
+
+SET(7z_WIN_SOURCES
+  CPP/Windows/FileDir.cpp
+  CPP/Windows/FileDir.h
+  CPP/Windows/FileFind.cpp
+  CPP/Windows/FileFind.h
+  CPP/Windows/FileIO.cpp
+  CPP/Windows/FileIO.h
+  CPP/Windows/FileName.cpp
+  CPP/Windows/FileName.h
+  CPP/Windows/PropVariant.cpp
+  CPP/Windows/PropVariant.h
+  CPP/Windows/PropVariantUtils.cpp
+  CPP/Windows/PropVariantUtils.h
+  CPP/Windows/Synchronization.cpp
+  CPP/Windows/Synchronization.h
+  CPP/Windows/System.cpp
+  CPP/Windows/System.h
+  CPP/Windows/TimeUtils.cpp
+  CPP/Windows/TimeUtils.h)
+
+SET(7z_7ZIP_COMMON_SOURCES
+  CPP/7zip/Common/CreateCoder.cpp
+  CPP/7zip/Common/CreateCoder.h
+  CPP/7zip/Common/CWrappers.cpp
+  CPP/7zip/Common/CWrappers.h
+  CPP/7zip/Common/InBuffer.cpp
+  CPP/7zip/Common/InBuffer.h
+  CPP/7zip/Common/InOutTempBuffer.cpp
+  CPP/7zip/Common/InOutTempBuffer.h
+  CPP/7zip/Common/FilterCoder.cpp
+  CPP/7zip/Common/FilterCoder.h
+  CPP/7zip/Common/LimitedStreams.cpp
+  CPP/7zip/Common/LimitedStreams.h
+  CPP/7zip/Common/LockedStream.cpp
+  CPP/7zip/Common/LockedStream.h
+  CPP/7zip/Common/MemBlocks.cpp
+  CPP/7zip/Common/MemBlocks.h
+  CPP/7zip/Common/MethodId.cpp
+  CPP/7zip/Common/MethodId.h
+  CPP/7zip/Common/MethodProps.cpp
+  CPP/7zip/Common/MethodProps.h
+  CPP/7zip/Common/OffsetStream.cpp
+  CPP/7zip/Common/OffsetStream.h
+  CPP/7zip/Common/OutBuffer.cpp
+  CPP/7zip/Common/OutBuffer.h
+  CPP/7zip/Common/OutMemStream.cpp
+  CPP/7zip/Common/OutMemStream.h
+  CPP/7zip/Common/ProgressMt.cpp
+  CPP/7zip/Common/ProgressMt.h
+  CPP/7zip/Common/ProgressUtils.cpp
+  CPP/7zip/Common/ProgressUtils.h
+  CPP/7zip/Common/PropId.cpp
+  CPP/7zip/Common/StreamBinder.cpp
+  CPP/7zip/Common/StreamBinder.h
+  CPP/7zip/Common/StreamObjects.cpp
+  CPP/7zip/Common/StreamObjects.h
+  CPP/7zip/Common/StreamUtils.cpp
+  CPP/7zip/Common/StreamUtils.h
+  CPP/7zip/Common/UniqBlocks.cpp
+  CPP/7zip/Common/UniqBlocks.h
+  CPP/7zip/Common/VirtThread.cpp
+  CPP/7zip/Common/VirtThread.h)
+
+SET(7z_AR_SOURCES
+  CPP/7zip/Archive/ApmHandler.cpp
+  CPP/7zip/Archive/ArHandler.cpp
+  CPP/7zip/Archive/ArjHandler.cpp
+  CPP/7zip/Archive/Bz2Handler.cpp
+  CPP/7zip/Archive/ComHandler.cpp
+  CPP/7zip/Archive/CpioHandler.cpp
+  CPP/7zip/Archive/CramfsHandler.cpp
+  CPP/7zip/Archive/DeflateProps.cpp
+  CPP/7zip/Archive/DeflateProps.h
+  CPP/7zip/Archive/DmgHandler.cpp
+  CPP/7zip/Archive/ElfHandler.cpp
+  CPP/7zip/Archive/ExtHandler.cpp
+  CPP/7zip/Archive/FatHandler.cpp
+  CPP/7zip/Archive/FlvHandler.cpp
+  CPP/7zip/Archive/GzHandler.cpp
+  CPP/7zip/Archive/GptHandler.cpp
+  CPP/7zip/Archive/HandlerCont.cpp
+  CPP/7zip/Archive/HandlerCont.h
+  CPP/7zip/Archive/HfsHandler.cpp
+  CPP/7zip/Archive/IArchive.h
+  CPP/7zip/Archive/IhexHandler.cpp
+  CPP/7zip/Archive/LzhHandler.cpp
+  CPP/7zip/Archive/LzmaHandler.cpp
+  CPP/7zip/Archive/MachoHandler.cpp
+  CPP/7zip/Archive/MbrHandler.cpp
+  CPP/7zip/Archive/MslzHandler.cpp
+  CPP/7zip/Archive/MubHandler.cpp
+  CPP/7zip/Archive/NtfsHandler.cpp
+  CPP/7zip/Archive/PeHandler.cpp
+  CPP/7zip/Archive/PpmdHandler.cpp
+  CPP/7zip/Archive/QcowHandler.cpp
+  CPP/7zip/Archive/RpmHandler.cpp
+  CPP/7zip/Archive/SplitHandler.cpp
+  CPP/7zip/Archive/SquashfsHandler.cpp
+  CPP/7zip/Archive/SwfHandler.cpp
+  CPP/7zip/Archive/UefiHandler.cpp
+  CPP/7zip/Archive/VdiHandler.cpp
+  CPP/7zip/Archive/VhdHandler.cpp
+  CPP/7zip/Archive/VmdkHandler.cpp
+  CPP/7zip/Archive/XarHandler.cpp
+  CPP/7zip/Archive/XzHandler.cpp
+  CPP/7zip/Archive/XzHandler.h
+  CPP/7zip/Archive/ZHandler.cpp)
+
+SET(7z_AR_COMMON_SOURCES
+  CPP/7zip/Archive/Common/CoderMixer2.cpp
+  CPP/7zip/Archive/Common/CoderMixer2.h
+  CPP/7zip/Archive/Common/DummyOutStream.cpp
+  CPP/7zip/Archive/Common/DummyOutStream.h
+  CPP/7zip/Archive/Common/FindSignature.cpp
+  CPP/7zip/Archive/Common/FindSignature.h
+  CPP/7zip/Archive/Common/InStreamWithCRC.cpp
+  CPP/7zip/Archive/Common/InStreamWithCRC.h
+  CPP/7zip/Archive/Common/ItemNameUtils.cpp
+  CPP/7zip/Archive/Common/ItemNameUtils.h
+  CPP/7zip/Archive/Common/MultiStream.cpp
+  CPP/7zip/Archive/Common/MultiStream.h
+  CPP/7zip/Archive/Common/OutStreamWithCRC.cpp
+  CPP/7zip/Archive/Common/OutStreamWithCRC.h
+  CPP/7zip/Archive/Common/OutStreamWithSha1.cpp
+  CPP/7zip/Archive/Common/OutStreamWithSha1.h
+  CPP/7zip/Archive/Common/HandlerOut.cpp
+  CPP/7zip/Archive/Common/HandlerOut.h
+  CPP/7zip/Archive/Common/ParseProperties.cpp
+  CPP/7zip/Archive/Common/ParseProperties.h)
+
+
+SET(7z_7Z_SOURCES
+  CPP/7zip/Archive/7z/7zCompressionMode.cpp
+  CPP/7zip/Archive/7z/7zCompressionMode.h
+  CPP/7zip/Archive/7z/7zDecode.cpp
+  CPP/7zip/Archive/7z/7zDecode.h
+  CPP/7zip/Archive/7z/7zEncode.cpp
+  CPP/7zip/Archive/7z/7zEncode.h
+  CPP/7zip/Archive/7z/7zExtract.cpp
+  CPP/7zip/Archive/7z/7zFolderInStream.cpp
+  CPP/7zip/Archive/7z/7zFolderInStream.h
+  CPP/7zip/Archive/7z/7zHandler.cpp
+  CPP/7zip/Archive/7z/7zHandler.h
+  CPP/7zip/Archive/7z/7zHandlerOut.cpp
+  CPP/7zip/Archive/7z/7zHeader.cpp
+  CPP/7zip/Archive/7z/7zHeader.h
+  CPP/7zip/Archive/7z/7zIn.cpp
+  CPP/7zip/Archive/7z/7zIn.h
+  CPP/7zip/Archive/7z/7zOut.cpp
+  CPP/7zip/Archive/7z/7zOut.h
+  CPP/7zip/Archive/7z/7zProperties.cpp
+  CPP/7zip/Archive/7z/7zProperties.h
+  CPP/7zip/Archive/7z/7zSpecStream.cpp
+  CPP/7zip/Archive/7z/7zSpecStream.h
+  CPP/7zip/Archive/7z/7zUpdate.cpp
+  CPP/7zip/Archive/7z/7zUpdate.h
+  CPP/7zip/Archive/7z/7zRegister.cpp)
+
+SET(7z_CAB_SOURCES
+  CPP/7zip/Archive/Cab/CabBlockInStream.cpp
+  CPP/7zip/Archive/Cab/CabBlockInStream.h
+  CPP/7zip/Archive/Cab/CabHandler.cpp
+  CPP/7zip/Archive/Cab/CabHandler.h
+  CPP/7zip/Archive/Cab/CabHeader.cpp
+  CPP/7zip/Archive/Cab/CabHeader.h
+  CPP/7zip/Archive/Cab/CabIn.cpp
+  CPP/7zip/Archive/Cab/CabIn.h
+  CPP/7zip/Archive/Cab/CabRegister.cpp)
+
+SET(7z_CHM_SOURCES
+  CPP/7zip/Archive/Chm/ChmHandler.cpp
+  CPP/7zip/Archive/Chm/ChmHandler.h
+  CPP/7zip/Archive/Chm/ChmIn.cpp
+  CPP/7zip/Archive/Chm/ChmIn.h)
+
+SET(7z_ISO_SOURCES
+  CPP/7zip/Archive/Iso/IsoHandler.cpp
+  CPP/7zip/Archive/Iso/IsoHandler.h
+  CPP/7zip/Archive/Iso/IsoHeader.cpp
+  CPP/7zip/Archive/Iso/IsoHeader.h
+  CPP/7zip/Archive/Iso/IsoIn.cpp
+  CPP/7zip/Archive/Iso/IsoIn.h
+  CPP/7zip/Archive/Iso/IsoRegister.cpp)
+
+SET(7z_NSIS_SOURCES
+  CPP/7zip/Archive/Nsis/NsisDecode.cpp
+  CPP/7zip/Archive/Nsis/NsisDecode.h
+  CPP/7zip/Archive/Nsis/NsisHandler.cpp
+  CPP/7zip/Archive/Nsis/NsisHandler.h
+  CPP/7zip/Archive/Nsis/NsisIn.cpp
+  CPP/7zip/Archive/Nsis/NsisIn.h
+  CPP/7zip/Archive/Nsis/NsisRegister.cpp)
+
+SET(7z_RAR_SOURCES
+  CPP/7zip/Archive/Rar/RarHandler.cpp
+  CPP/7zip/Archive/Rar/RarHandler.h
+  CPP/7zip/Archive/Rar/Rar5Handler.cpp
+  CPP/7zip/Archive/Rar/Rar5Handler.h)
+
+SET(7z_TAR_SOURCES
+  CPP/7zip/Archive/Tar/TarHandler.cpp
+  CPP/7zip/Archive/Tar/TarHandler.h
+  CPP/7zip/Archive/Tar/TarHandlerOut.cpp
+  CPP/7zip/Archive/Tar/TarHeader.cpp
+  CPP/7zip/Archive/Tar/TarHeader.h
+  CPP/7zip/Archive/Tar/TarIn.cpp
+  CPP/7zip/Archive/Tar/TarIn.h
+  CPP/7zip/Archive/Tar/TarOut.cpp
+  CPP/7zip/Archive/Tar/TarOut.h
+  CPP/7zip/Archive/Tar/TarUpdate.cpp
+  CPP/7zip/Archive/Tar/TarUpdate.h
+  CPP/7zip/Archive/Tar/TarRegister.cpp)
+
+SET(7z_UDF_SOURCES
+  CPP/7zip/Archive/Udf/UdfHandler.cpp
+  CPP/7zip/Archive/Udf/UdfHandler.h
+  CPP/7zip/Archive/Udf/UdfIn.cpp
+  CPP/7zip/Archive/Udf/UdfIn.h)
+
+SET(7z_WIM_SOURCES
+  CPP/7zip/Archive/Wim/WimHandler.cpp
+  CPP/7zip/Archive/Wim/WimHandler.h
+  CPP/7zip/Archive/Wim/WimHandlerOut.cpp
+  CPP/7zip/Archive/Wim/WimIn.cpp
+  CPP/7zip/Archive/Wim/WimIn.h
+  CPP/7zip/Archive/Wim/WimRegister.cpp)
+
+SET(7z_ZIP_SOURCES
+  CPP/7zip/Archive/Zip/ZipAddCommon.cpp
+  CPP/7zip/Archive/Zip/ZipAddCommon.h
+  CPP/7zip/Archive/Zip/ZipCompressionMode.h
+  CPP/7zip/Archive/Zip/ZipHandler.cpp
+  CPP/7zip/Archive/Zip/ZipHandler.h
+  CPP/7zip/Archive/Zip/ZipHandlerOut.cpp
+  CPP/7zip/Archive/Zip/ZipIn.cpp
+  CPP/7zip/Archive/Zip/ZipIn.h
+  CPP/7zip/Archive/Zip/ZipItem.cpp
+  CPP/7zip/Archive/Zip/ZipItem.h
+  CPP/7zip/Archive/Zip/ZipOut.cpp
+  CPP/7zip/Archive/Zip/ZipOut.h
+  CPP/7zip/Archive/Zip/ZipUpdate.cpp
+  CPP/7zip/Archive/Zip/ZipUpdate.h
+  CPP/7zip/Archive/Zip/ZipRegister.cpp)
+
+SET(7z_COMPRESS_SOURCES
+  CPP/7zip/Compress/Bcj2Coder.cpp
+  CPP/7zip/Compress/Bcj2Coder.h
+  CPP/7zip/Compress/Bcj2Register.cpp
+  CPP/7zip/Compress/BcjCoder.cpp
+  CPP/7zip/Compress/BcjCoder.h
+  CPP/7zip/Compress/BcjRegister.cpp
+  CPP/7zip/Compress/BitlDecoder.cpp
+  CPP/7zip/Compress/BitlDecoder.h
+  CPP/7zip/Compress/BranchMisc.cpp
+  CPP/7zip/Compress/BranchMisc.h
+  CPP/7zip/Compress/BranchRegister.cpp
+  CPP/7zip/Compress/ByteSwap.cpp
+  CPP/7zip/Compress/BZip2Const.h
+  CPP/7zip/Compress/BZip2Crc.cpp
+  CPP/7zip/Compress/BZip2Crc.h
+  CPP/7zip/Compress/BZip2Decoder.cpp
+  CPP/7zip/Compress/BZip2Decoder.h
+  CPP/7zip/Compress/BZip2Encoder.cpp
+  CPP/7zip/Compress/BZip2Encoder.h
+  CPP/7zip/Compress/BZip2Register.cpp
+  CPP/7zip/Compress/CopyCoder.cpp
+  CPP/7zip/Compress/CopyCoder.h
+  CPP/7zip/Compress/CopyRegister.cpp
+  CPP/7zip/Compress/Deflate64Register.cpp
+  CPP/7zip/Compress/DeflateConst.h
+  CPP/7zip/Compress/DeflateDecoder.cpp
+  CPP/7zip/Compress/DeflateDecoder.h
+  CPP/7zip/Compress/DeflateEncoder.cpp
+  CPP/7zip/Compress/DeflateEncoder.h
+  CPP/7zip/Compress/DeflateRegister.cpp
+  CPP/7zip/Compress/DeltaFilter.cpp
+  CPP/7zip/Compress/ImplodeDecoder.cpp
+  CPP/7zip/Compress/ImplodeDecoder.h
+  CPP/7zip/Compress/ImplodeHuffmanDecoder.cpp
+  CPP/7zip/Compress/ImplodeHuffmanDecoder.h
+  CPP/7zip/Compress/LzhDecoder.cpp
+  CPP/7zip/Compress/LzhDecoder.h
+  CPP/7zip/Compress/Lzma2Decoder.cpp
+  CPP/7zip/Compress/Lzma2Decoder.h
+  CPP/7zip/Compress/Lzma2Encoder.cpp
+  CPP/7zip/Compress/Lzma2Encoder.h
+  CPP/7zip/Compress/Lzma2Register.cpp
+  CPP/7zip/Compress/LzmaDecoder.cpp
+  CPP/7zip/Compress/LzmaDecoder.h
+  CPP/7zip/Compress/LzmaEncoder.cpp
+  CPP/7zip/Compress/LzmaEncoder.h
+  CPP/7zip/Compress/LzmaRegister.cpp
+  CPP/7zip/Compress/LzmsDecoder.cpp
+  CPP/7zip/Compress/LzmsDecoder.h
+  CPP/7zip/Compress/LzOutWindow.cpp
+  CPP/7zip/Compress/LzOutWindow.h
+  CPP/7zip/Compress/LzxDecoder.cpp
+  CPP/7zip/Compress/LzxDecoder.h
+  CPP/7zip/Compress/Mtf8.h
+  CPP/7zip/Compress/PpmdDecoder.cpp
+  CPP/7zip/Compress/PpmdDecoder.h
+  CPP/7zip/Compress/PpmdEncoder.cpp
+  CPP/7zip/Compress/PpmdEncoder.h
+  CPP/7zip/Compress/PpmdRegister.cpp
+  CPP/7zip/Compress/PpmdZip.cpp
+  CPP/7zip/Compress/PpmdZip.h
+  CPP/7zip/Compress/QuantumDecoder.cpp
+  CPP/7zip/Compress/QuantumDecoder.h
+  CPP/7zip/Compress/Rar1Decoder.cpp
+  CPP/7zip/Compress/Rar1Decoder.h
+  CPP/7zip/Compress/Rar2Decoder.cpp
+  CPP/7zip/Compress/Rar2Decoder.h
+  CPP/7zip/Compress/Rar3Decoder.cpp
+  CPP/7zip/Compress/Rar3Decoder.h
+  CPP/7zip/Compress/Rar3Vm.cpp
+  CPP/7zip/Compress/Rar3Vm.h
+  CPP/7zip/Compress/Rar5Decoder.cpp
+  CPP/7zip/Compress/Rar5Decoder.h
+  CPP/7zip/Compress/RarCodecsRegister.cpp
+  CPP/7zip/Compress/ShrinkDecoder.cpp
+  CPP/7zip/Compress/ShrinkDecoder.h
+  CPP/7zip/Compress/ZlibDecoder.cpp
+  CPP/7zip/Compress/ZlibDecoder.h
+  CPP/7zip/Compress/ZlibEncoder.cpp
+  CPP/7zip/Compress/ZlibEncoder.h
+  CPP/7zip/Compress/ZDecoder.cpp
+  CPP/7zip/Compress/ZDecoder.h
+  CPP/7zip/Compress/XPressDecoder.cpp
+  CPP/7zip/Compress/XPressDecoder.h)
+
+SET(7z_CRYPTO_SOURCES
+  CPP/7zip/Crypto/7zAes.cpp
+  CPP/7zip/Crypto/7zAes.h
+  CPP/7zip/Crypto/7zAesRegister.cpp
+  CPP/7zip/Crypto/HmacSha1.cpp
+  CPP/7zip/Crypto/HmacSha1.h
+  CPP/7zip/Crypto/HmacSha256.cpp
+  CPP/7zip/Crypto/HmacSha256.h
+  CPP/7zip/Crypto/MyAes.cpp
+  CPP/7zip/Crypto/MyAes.h
+  CPP/7zip/Crypto/MyAesReg.cpp
+  CPP/7zip/Crypto/Pbkdf2HmacSha1.cpp
+  CPP/7zip/Crypto/Pbkdf2HmacSha1.h
+  CPP/7zip/Crypto/RandGen.cpp
+  CPP/7zip/Crypto/RandGen.h
+  CPP/7zip/Crypto/Rar20Crypto.cpp
+  CPP/7zip/Crypto/Rar20Crypto.h
+  CPP/7zip/Crypto/Rar5Aes.cpp
+  CPP/7zip/Crypto/Rar5Aes.h
+  CPP/7zip/Crypto/RarAes.cpp
+  CPP/7zip/Crypto/RarAes.h
+  CPP/7zip/Crypto/WzAes.cpp
+  CPP/7zip/Crypto/WzAes.h
+  CPP/7zip/Crypto/ZipCrypto.cpp
+  CPP/7zip/Crypto/ZipCrypto.h
+  CPP/7zip/Crypto/ZipStrong.cpp
+  CPP/7zip/Crypto/ZipStrong.h)
+
+
+SET(7z_C_SOURCES
+  C/7zTypes.h
+  C/7zBuf.h
+  C/7zBuf2.c
+  C/7zStream.c
+  C/Alloc.c
+  C/Alloc.h
+  C/Bcj2.c
+  C/Bcj2.h
+  C/Bcj2Enc.c
+  C/Blake2.h
+  C/Blake2s.c
+  C/Bra.c
+  C/Bra.h
+  C/Bra86.c
+  C/BraIA64.c
+  C/BwtSort.c
+  C/BwtSort.h
+  C/CpuArch.c
+  C/CpuArch.h
+  C/Delta.c
+  C/Delta.h
+  C/HuffEnc.c
+  C/HuffEnc.h
+  C/LzFind.c
+  C/LzFind.h
+  C/LzFindMt.c
+  C/LzFindMt.h
+  C/Lzma2Dec.c
+  C/Lzma2Dec.h
+  C/Lzma2Enc.c
+  C/Lzma2Enc.h
+  C/LzmaDec.c
+  C/LzmaDec.h
+  C/LzmaEnc.c
+  C/LzmaEnc.h
+  C/MtCoder.c
+  C/MtCoder.h
+  C/Ppmd.h
+  C/Ppmd7.c
+  C/Ppmd7.h
+  C/Ppmd7Dec.c
+  C/Ppmd7Enc.c
+  C/Ppmd8.c
+  C/Ppmd8.h
+  C/Ppmd8Dec.c
+  C/Ppmd8Enc.c
+  C/Sha1.c
+  C/Sha1.h
+  C/Sha256.c
+  C/Sha256.h
+  C/Sort.c
+  C/Sort.h
+  C/Threads.c
+  C/Threads.h
+  C/Xz.c
+  C/Xz.h
+  C/XzDec.c
+  C/XzEnc.c
+  C/XzEnc.h
+  C/XzIn.c)
+
+SET(7z_AES_SOURCES
+  C/Aes.c
+  C/Aes.h
+  C/AesOpt.c)
+
+SET(7z_CRC_SOURCES
+  C/7zCrc.c
+  C/7zCrc.h
+  C/7zCrcOpt.c)
+
+SET(7z_CRC64_SOURCES
+  C/XzCrc64.c
+  C/XzCrc64.h
+  C/XzCrc64Opt.c)
+
+SET(7z_SOURCES
+	${7z_COMMON_SOURCES}
+	${7z_WIN_SOURCES}
+	${7z_7ZIP_COMMON_SOURCES}
+	${7z_AR_SOURCES}
+	${7z_AR_COMMON_SOURCES}
+	${7z_7Z_SOURCES}
+	${7z_CAB_SOURCES}
+	${7z_CHM_SOURCES}
+	${7z_ISO_SOURCES}
+	${7z_NSIS_SOURCES}
+	${7z_RAR_SOURCES}
+	${7z_TAR_SOURCES}
+	${7z_UDF_SOURCES}
+	${7z_WIM_SOURCES}
+	${7z_ZIP_SOURCES}
+	${7z_COMPRESS_SOURCES}
+	${7z_CRYPTO_SOURCES}
+	${7z_C_SOURCES}
+	${7z_AES_SOURCES}
+	${7z_CRC_SOURCES}
+	${7z_CRC64_SOURCES}
+	CPP/7zip/Compress/CodecExports.cpp
+	CPP/7zip/Archive/ArchiveExports.cpp
+	CPP/7zip/Archive/DllExports2.cpp
+	CPP/7zip/Archive/Archive2.def
+	CPP/7zip/Bundles/Format7zF/resource.rc)
+
+add_library(7z SHARED ${7z_SOURCES})
+target_compile_definitions(7z PRIVATE EXTERNAL_CODECS)
